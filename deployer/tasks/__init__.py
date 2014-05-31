@@ -1,5 +1,5 @@
 from fabric.api import task, env
-from json import load
+from deployer.utils.json import load
 
 __author__ = 'adam.jorgensen.za@gmail.com'
 
@@ -11,7 +11,7 @@ def config(path):
 
     :param path:
     """
-    env.update(load(open(path, 'r')))
+    env.update(load(path))
 
 
 @task
@@ -21,7 +21,7 @@ def target(target):
 
     :param target: Name of the JSON config file located in config/targets associated with the target system
     """
-    env.update({'target': load(open('config/targets/%s.json' % target, 'r'))})
+    env.update({'target': load('config/targets/%s.json' % target)})
 
 
 @task
@@ -31,7 +31,7 @@ def project(project):
 
     :param project: Name of the JSON config file located in config/projects associated with the project
     """
-    env.update({'project': load(open('config/projects/%s.json' % project, 'r'))})
+    env.update({'project': load('config/projects/%s.json' % project)})
 
 
 @task
