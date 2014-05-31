@@ -1,0 +1,7 @@
+{
+    "hosts": ["localhost"],
+    "user": "me",
+    "group": "users",
+    "sudo_user": "you",
+    "path": "/home/me/deployment"
+}
