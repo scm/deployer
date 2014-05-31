@@ -1,5 +1,6 @@
 from fabric.api import task, env
 from deployer.utils.json import load
+from deployer.utils.decorators import targeted
 
 __author__ = 'adam.jorgensen.za@gmail.com'
 
@@ -44,10 +45,12 @@ def branch(branch):
     env.branch = branch
 
 
-@task
+@task(alias='setup')
+@targeted
 def setup():
     """
-    Sets up the deployment system on the target system:
+    Sets up the deployment system on the target system
+
      1. Installs necessary system-wide software
      2. Checks out deployer
      3. Checks out projects specified in config/projects.json
@@ -55,11 +58,19 @@ def setup():
     pass
 
 
-@task
+@task(alias='build')
+@targeted
 def build():
+    """
+    Builds Docker images for Projects on the target system
+    """
     pass
 
 
-@task
+@task(alias='deploy')
+@targeted
 def deploy():
+    """
+    Deploys Docker containers for Projects on the target system
+    """
     pass
