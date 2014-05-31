@@ -52,3 +52,12 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# IntelliJ
+.idea
+*.iml
+
+# Deployer
+config/projects
+projects
+
+
