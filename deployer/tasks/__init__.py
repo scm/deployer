@@ -1,6 +1,17 @@
-from fabric.api import task
+from fabric.api import task, env
+from json import load
 
 __author__ = 'adam.jorgensen.za@gmail.com'
+
+
+@task
+def config(path):
+    """
+    Applies the contents of a JSON file to the Fabric env
+
+    :param path:
+    """
+    env.update(load(open(path, 'r')))
 
 
 @task
@@ -10,7 +21,7 @@ def target(target):
 
     :param target: Name of the JSON config file located in config/targets associated with the target system
     """
-    pass
+    env.update({'target': load(open('config/targets/%s.json' % target, 'r'))})
 
 
 @task
@@ -20,7 +31,7 @@ def project(project):
 
     :param project: Name of the JSON config file located in config/projects associated with the project
     """
-    pass
+    env.update({'project': load(open('config/projects/%s.json' % project, 'r'))})
 
 
 @task
@@ -30,7 +41,7 @@ def branch(branch):
 
     :param branch: Name of the branch to deploy
     """
-    pass
+    env.branch = branch
 
 
 @task
