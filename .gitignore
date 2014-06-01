@@ -59,6 +59,5 @@ docs/_build/
 # Deployer
 config/targets
 config/projects
-projects
 
 
