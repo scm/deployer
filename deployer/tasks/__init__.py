@@ -6,13 +6,17 @@ __author__ = 'adam.jorgensen.za@gmail.com'
 
 
 @task
-def config(path):
+def config(config):
     """
-    Applies the contents of a JSON file to the Fabric env
+    Applies the contents of a YAML file to the Fabric env
 
-    :param path:
+    :param config: Name of the YAML config located in config to load and apply to the Fabric env
     """
-    env.update(load(path))
+    configs = env.setdefault('configs', {})
+    if config not in configs:
+        config_data = load('config/%s.yml' % config)
+        configs[config] = config_data
+    env.update(configs[config])
 
 
 @task
@@ -20,9 +24,13 @@ def target(target):
     """
     Set the deployment target system
 
-    :param target: Name of the JSON config file located in config/targets associated with the target system
+    :param target: Name of the YAML config file located in config/targets associated with the target system
     """
-    env.update({'target': load('config/targets/%s.yml' % target)})
+    targets = env.setdefault('targets', {})
+    if target not in targets:
+        target_config = load('config/targets/%s.yml' % target)
+        targets[target] = target_config
+    env.target = targets[target]
 
 
 @task
@@ -30,9 +38,13 @@ def project(project):
     """
     Specify the project to deploy to the target system.
 
-    :param project: Name of the JSON config file located in config/projects associated with the project
+    :param project: Name of the YAML config file located in config/projects associated with the project
     """
-    env.update({'project': load('config/projects/%s.yml' % project)})
+    projects = env.setdefault('projects', {})
+    if project not in projects:
+        project_config = load('config/projects/%s.yml' % project)
+        projects[project] = project_config
+    env.project = projects[project]
 
 
 @task
