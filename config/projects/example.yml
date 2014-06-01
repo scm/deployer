@@ -1,0 +1,11 @@
+# each component is indicated with a name
+a:
+  # source indicates the path to the git repository reprsenting the component
+  source: git@github.com:USER/PROJECTA.git
+  # dockerfiles lists each Dockerfile associated with the component
+  dockerfiles:
+    - PROJECTA/config/docker/image1.Dockerfile
+    - PROJECTA/config/docker/image2.Dockerfile
+b:
+  source: git@github.com:USER/PROJECTB.git
+  # dockerfiles is omitted so it is assumed that there is a single Dockerfile located in the component root

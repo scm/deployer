@@ -1,0 +1,10 @@
+# each target file defines a deployment target or set of targets as per the standard Fabric env entries
+hosts:
+  - localhost
+user: me
+group: users
+sudo_user: you
+# deployment_root is required and indicates the location on the target(s) that projects will be set up under
+deployment_root: /home/me/deployer
+
+

@@ -1,5 +1,5 @@
 from fabric.api import task, env
-from deployer.utils.json import load
+from deployer.utils.config import load
 from deployer.utils.decorators import targeted
 
 __author__ = 'adam.jorgensen.za@gmail.com'
@@ -22,7 +22,7 @@ def target(target):
 
     :param target: Name of the JSON config file located in config/targets associated with the target system
     """
-    env.update({'target': load('config/targets/%s.json' % target)})
+    env.update({'target': load('config/targets/%s.yml' % target)})
 
 
 @task
@@ -32,7 +32,7 @@ def project(project):
 
     :param project: Name of the JSON config file located in config/projects associated with the project
     """
-    env.update({'project': load('config/projects/%s.json' % project)})
+    env.update({'project': load('config/projects/%s.yml' % project)})
 
 
 @task
@@ -49,11 +49,7 @@ def branch(branch):
 @targeted
 def setup():
     """
-    Sets up the deployment system on the target system
-
-     1. Installs necessary system-wide software
-     2. Checks out deployer
-     3. Checks out projects specified in config/projects.json
+    Checks out Projects on the target system
     """
     pass
 
