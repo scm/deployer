@@ -1,50 +1,47 @@
 from fabric.api import task, env
+from fabric.utils import _AttributeDict
 from deployer.utils.config import load
-from deployer.utils.decorators import targeted
+from deployer.utils.decorators import targeted, cache_config
 
 __author__ = 'adam.jorgensen.za@gmail.com'
 
 
-@task
-def config(config):
+@task(alias='config')
+@cache_config
+def config(*configs):
     """
-    Applies the contents of a YAML file to the Fabric env
+    Applies the contents of one or more YAML files to the Fabric env
 
-    :param config: Name of the YAML config located in config to load and apply to the Fabric env
+    :param *configs: Comma-separated names of YAML config files located in config
     """
-    configs = env.setdefault('configs', {})
-    if config not in configs:
-        config_data = load('config/%s.yml' % config)
-        configs[config] = config_data
-    env.update(configs[config])
+    configs = dict(configs)
+    if 'all' in configs:
+        env.update(configs['all'])
+        del configs['all']
+    for config, config_data in configs.items():
+        env.update(config_data)
 
 
-@task
-def target(target):
+@task(alias='target')
+@cache_config('config/targets')
+def target(*targets):
     """
-    Set the deployment target system
+    Set the deployment target system(s)
 
-    :param target: Name of the YAML config file located in config/targets associated with the target system
+    :param *targets: Comma-separated names of YAML config files located in config/targets
     """
-    targets = env.setdefault('targets', {})
-    if target not in targets:
-        target_config = load('config/targets/%s.yml' % target)
-        targets[target] = target_config
-    env.target = targets[target]
+    env.targets = _AttributeDict(targets)
 
 
-@task
-def project(project):
+@task(alias='project')
+@cache_config('config/projects')
+def project(*projects):
     """
-    Specify the project to deploy to the target system.
+    Specify the project(s) to deploy to the target system.
 
-    :param project: Name of the YAML config file located in config/projects associated with the project
+    :param *projects: Comma-separated names of YAML config files located in config/projects
     """
-    projects = env.setdefault('projects', {})
-    if project not in projects:
-        project_config = load('config/projects/%s.yml' % project)
-        projects[project] = project_config
-    env.project = projects[project]
+    env.projects = _AttributeDict(projects)
 
 
 @task
