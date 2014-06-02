@@ -82,7 +82,26 @@ Additional Configuration
 Beyond Projects and Targets, it is possible to defined Additional Configuration in the form of YAML files placed
 within the *config/* directory directly.
 
-The values defined in an Additional Configuration can be applied during usage through the **config** Fabric task.
+The values defined in an Additional Configuration can be applied to the Fabric environment during usage through
+the **config** Fabric task.
+
+all.yml
+-------
+Beyond all the configuration options described above Deployer also supports special handling for the optional files
+*config/all.yml*, *config/targets/all.yml* and *config/projects/all.yml*. This handling differs somewhat for the first
+item but is fairly consistent for the latter two.
+
+Common to all three files is their basic handling. If they exist, they will be loaded when the associated Fabric task
+is called.
+
+In the case of *config/all.yml*, this file will be applied to the Fabric environment automatically, if it exists, when
+the **config** Fabric task is executed. Furthermore, it is applied before any other YAML files named when calling
+the **config** Fabric task and hence whatever variables it sets can be overridden in explicitly named YAML files.
+
+The Fabric environment variables defined in *config/targets/all.yml* and *config/projects/all.yml* are treated
+somewhat differently due to the manner in which the YAML files associated with Projects and Deployment Targets are
+processed. Variables defined in these files will always be used in the relevant context but will also always be
+superseded by the values defined in named YAML files.
 
 
 Usage
