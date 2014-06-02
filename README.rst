@@ -72,6 +72,9 @@ In addition to the standard Fabric environment variables, the Deployment Target 
 environment variable named **deployment_root**. This variable determines the path on the Deployment Target systems
 that will be used as a base for Deployer operations.
 
+The Deployment Target can also define an environment variable named **branch**, the value of which indicates the
+default Project branch to deploy to the Target.
+
 Consult the *config/targets/example.yml* file for further details.
 
 Additional Configuration

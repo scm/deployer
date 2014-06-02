@@ -6,5 +6,7 @@ group: users
 sudo_user: you
 # deployment_root is required and indicates the location on the target(s) that projects will be set up under
 deployment_root: /home/me/deployer
+# branch indicates the default branch to deploy to the target
+branch: somebranch
 
 
